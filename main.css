@@ -1,0 +1,485 @@
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+    font-family: "Roboto", sans-serif;
+    background-color: #333;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    grid-auto-rows: 1fr;
+    margin:5px;
+}
+
+.folderOuter {
+    color: #fff;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    display: table;
+}
+
+div.cls-context-menu-folder {
+	display: table-cell;
+    	max-width: 100%;
+	vertical-align: middle;
+	word-break: break-all;
+}
+
+p.cls-context-menu-folder {
+    margin: 4px;
+}
+
+.grid::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.grid > *:first-child {
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
+}
+
+/* Just to make the grid visible */
+
+.grid > * {
+      background: #555;
+      border: 1px #333 solid;
+}
+
+
+.gridBoxLink {
+	text-decoration:none;
+}
+
+
+.searchField {
+  padding: 6px;
+  margin: 8px;
+  font-size: 17px;
+  border: none;
+  text-align: left;
+  width: 100%;
+  border-radius: 0px;
+}
+
+.submitBtn {
+  padding: 6px 10px;
+  margin: 8px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  float: right;
+}
+
+.searchSpan {
+    display: block;
+     overflow: hidden;
+    padding-right:10px;
+}
+
+.searchForm {
+  background-color: #111111;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  top: 45px;
+  height:48px;
+}
+
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+  padding: 0;
+  height: 45px;
+  overflow: hidden;
+background-color: #111111;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navli {
+  float: left;
+}
+
+.navli a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.rightNavBtn {
+  float: right;
+  height: 100%;
+}
+
+.rightNavBtn button{
+	display: block;
+  	height: 100%;
+	background-color: Transparent;
+	background-repeat:no-repeat;
+	border: none;
+	cursor:pointer;
+ 	overflow: hidden;
+	outline:none;
+	padding: 8px;
+}
+
+.rightNavBtn img {
+	height: 100%;
+}
+
+.active {
+  background-color: #366EC9;
+}
+
+
+
+
+.infoLbl {
+   color: #fff;
+   margin-left: 16px;
+}
+
+
+.orLbl {
+   color: #fff;
+}
+
+.createDiv {
+      margin-top: 15px;
+}
+
+
+.uploadDiv {
+      margin-top: 5px;
+}
+
+.stepHeader {
+    color: #fff;
+    display: inline-block;
+   margin-bottom: 12px;
+}
+
+.tagTextArea-container {
+    padding-left: 48px;
+    padding-right: 8px;
+}
+
+
+.chooseImage-container {
+    padding-left: 48px;
+    padding-right: 8px;
+}
+
+
+.tagTextArea {
+    width:100%;
+    min-height: 60px;
+    font-size: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+}
+
+
+.locationText-container {
+    padding-left: 48px;
+    padding-right: 8px;
+}
+.locationText {
+    width:100%;
+    font-size: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+}
+
+
+.fieldExplanation {
+    color: #888;
+    margin: auto;
+    text-align: center;
+}
+
+
+.error {
+    color: #DB4141;
+    margin: 0px;
+}
+
+.numberCircle {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 4px;
+  margin: 8px;
+    margin-bottom: 4px;
+  background: #366EC9;
+  border: 2px solid #fff;
+  color: #fff;
+  text-align: center;
+        display: inline-block;
+
+  font-size: 16px;
+
+}
+
+
+.createPicker {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    padding: 2px 5px;
+    color: #fff;
+	-webkit-appearance: none;
+	font-size: 17px;
+    margin-top:24px;
+    background: #366EC9;
+  text-decoration: none;
+}
+
+.submitUploadBtn {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    padding: 2px 5px;
+    color: #fff;
+	-webkit-appearance: none;
+	font-size: 17px;
+    margin-top:24px;
+    background: #366EC9;
+    display: inline;
+}
+
+label.myLabel input[type="file"] {
+    position:absolute;
+    top: -1000px;
+}
+
+/***** Example custom styling *****/
+.myLabel {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    padding: 2px 5px;
+    color: #fff;
+    margin: 2px;
+
+    background: #366EC9;
+    display: inline;
+}
+
+
+
+#body {
+    padding-bottom:50px;	/* Height of the footer */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 100%;
+}
+
+
+#footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:50px;			/* Height of the footer */
+}
+
+#barlesscontainer {
+	position:relative;
+    min-height: 100%;
+}
+
+#container {
+	min-height: calc(100% - 45px);
+	position:relative;
+	padding-top:45px;
+}
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+}
+
+#searchContainer {
+	min-height: calc(100% - 93px);
+	position:relative;
+	padding-top:93px;
+}
+
+.redDeleteBtn {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    padding: 2px 5px;
+    color: #fff;
+    -webkit-appearance: none;
+    font-size: 17px;
+    margin-top:24px;
+    background: #DB4141;
+    text-decoration: none;
+}
+
+.cls-context-menu {
+   position: absolute;
+   display: none;
+     border: solid 1px #CCC;
+
+}
+
+.cls-context-menu li {
+  border-bottom: solid 1px #CCC;
+}
+
+.cls-context-menu li:last-child {
+  border: none;
+}
+
+.cls-context-menu ul, #context-menu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: white;
+}
+
+.cls-context-menu li a {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: blue;
+}
+
+.cls-context-menu li a:hover {
+  background: blue;
+  color: #FFF;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+	color: white;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 400px;
+  max-width: 60%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  background-color: #555;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #111;
+  color: white;
+}
+
+.modal-body {padding: 10px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  color: white;
+  background-color: #555;
+}
+
+.modal-body h3 {
+  margin: 8px 0;
+}
+
+.modal-body input[type=text], select {
+	display: block;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size:16px;
+	margin: 8px auto 0px auto;
+}
+
+
+.modal-footer input[type=submit] {
+	display: block;
+	background-color: #366EC9;
+	color: white;
+	font-size:20px;
+	padding: 8px 14px;
+	margin: 8px auto 8px auto;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	-webkit-appearance: none;
+}
+
+.modal-footer input[type=submit]:hover {
+  background-color: #2f60af;
+}
