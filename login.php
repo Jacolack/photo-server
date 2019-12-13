@@ -19,6 +19,7 @@ if (isset($_POST["key"])) {
   if ($verifiedpassword) {
     $_SESSION["verified"] = true;
     $whitelist = ["/index.php"];
+    $whitelist = ["/search.php"];
     # Add any other pages you wish to be accessible through the continue param.
     $nextpage = $_GET["continue"];
     if (isset($nextpage) && in_array($nextpage, $whitelist)) {

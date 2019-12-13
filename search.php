@@ -1,3 +1,8 @@
+<?php
+session_start();
+if ($_SESSION["verified"]) {
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,12 +22,14 @@
 <ul class="nav">
   <li class="navli"><a href="/">Home</a></li>
   <li class="navli"><a class="active" href="/search.php">Search</a></li>
-  <li class="navli"><a href="/create.php">Create</a></li>
 </ul>    
 
 
 
 <?php
+} else {
+	  header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+}
 $searchTag = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$searchTag = clean_input($_POST["search"]);
@@ -99,7 +106,7 @@ function clean_input($data) {
 	<!-- Footer start -->
              <center>
 		     <br>
-		     <p class="fieldExplanation">Made by Jack Sheridan | 2019</p>
+			<p class="fieldExplanation"><?php echo (100 - intval(file_get_contents("percent.txt"))); ?>% storage remaining</p>
             </center>
 	<!-- Footer end -->
 	</div>  

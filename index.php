@@ -18,7 +18,6 @@ if ($_SESSION["verified"]) {
 			<ul class="nav">
 				<li class="navli"><a class="active" href="/">Home</a></li>
 				<li class="navli"><a href="/search.php">Search</a></li>
-				<li class="navli"><a href="/create.php">Create</a></li>
 				<li class="rightNavBtn"><button id="folderBtn"><img src = "/newFolder.png"></button></li>
 				<li class="rightNavBtn"><button id="uploadBtn"><img src = "/upload.png"></button></li>
 			</ul>
@@ -124,7 +123,7 @@ function clean_input($data) {
 	<!-- Modal content -->
 	<div class="modal-content">
 		<div class="modal-header">
-			<span class="close">&times;</span>
+			<span id="closeFolder" class="close">&times;</span>
 			<h2>Create Folder</h2>
 		</div>
 		<form method="post" action="createFolder.php">  
@@ -136,8 +135,31 @@ function clean_input($data) {
 				<input type="submit" value="Create">
 			</div>
 		</form>
+	</div>
 </div>
+
+
+<!-- The Modal -->
+<div id="newImageModal" class="modal">
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span id="closeUpload" class="close">&times;</span>
+			<h2>Upload Image</h2>
+		</div>
+		<form method="post" action="upload.php" enctype="multipart/form-data">  
+			<div class="modal-body">
+				<input type="file" id="imageUploadInput" name="fileToUpload" required hidden>
+				<input type="text" placeholder="Tags" pattern="^[a-z0-9]+(,[a-z0-9]+){4,31}$" title="Lower case letters and numbers only. Separated by comma." name="tags" minlength="9" required>
+				<input type="hidden" name="location" value=<?php echo $location; ?>>
+			</div>
+			<div class="modal-footer">
+				<input type="submit" value="Create">
+			</div>
+		</form>
+	</div>
 </div>
+
 <script src="index.js"></script>
 </body>
 </html>

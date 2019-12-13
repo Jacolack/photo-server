@@ -20,7 +20,7 @@
     
 <?php
 
-
+ini_set('display_errors', TRUE);
 
 $servername = "localhost";
 $username = "root";
@@ -50,10 +50,14 @@ $fileErr = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$target_dir = "images/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+	echo "File Name: " . $_FILES["fileToUpload"]["name"];
 	$date = new DateTime("now", new DateTimeZone('America/Los_Angeles') );
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	$tags = clean_input($_POST["tags"]);
 	$location = clean_input($_POST["location"]);
+	echo $tags;
+	echo $location;
+
 
 	$uploadOk = 1;
 
@@ -151,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $real_target_file)) {
 			make_thumb("images/". $theId. ".".$imageFileType, "images/thumb".$theId.".". $imageFileType, 200, $imageFileType);
 			
-			header("Location:/completedPhoto.php?location=".$location);
+			header("Location:/index.php?location=".$location);
 			exit();
 		} else {
 			$fileErr = "Sorry, there was an error uploading your file.";
