@@ -1,6 +1,8 @@
 <?php
 session_start();
-if ($_SESSION["verified"]) {
+if (!$_SESSION["verified"]) {
+	header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +11,7 @@ if ($_SESSION["verified"]) {
     <title>Search</title>
     <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" /> 
-        <link rel="stylesheet" href="/main.css">
+        <link rel="stylesheet" href="/assets/main.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -27,9 +29,6 @@ if ($_SESSION["verified"]) {
 
 
 <?php
-} else {
-	  header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
-}
 $searchTag = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$searchTag = clean_input($_POST["search"]);

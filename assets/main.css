@@ -65,7 +65,11 @@ p.cls-context-menu-folder {
 	text-decoration:none;
 }
 
-.gridBoxItem {
+.gridBoxImage div {
+	background-size: cover;
+	image-orientation: from-image;
+	height: 100%;
+	width: 100%;
 }
 
 .searchField {

@@ -1,10 +1,17 @@
+<?php
+session_start();
+if (!$_SESSION["verified"]) {
+	header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Photos</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/assets/main.css">
 </head>
 
 <body>

@@ -1,3 +1,11 @@
+
+<?php
+session_start();
+if (!$_SESSION["verified"]) {
+	header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

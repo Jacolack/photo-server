@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Move Item</title>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
-	<link rel="stylesheet" href="/main.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
-<body>
-<div id="container">
-<div id="body">
-<!-- Body start -->
 <?php
+session_start();
+if (!$_SESSION["verified"]) {
+	header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+}
 
 ini_set('display_errors', TRUE);
 
@@ -61,22 +51,4 @@ function clean_input($data) {
 	$data = htmlspecialchars($data);
 	return $data;
 }
-
-}
-
-
 ?>
-    
-	<div id="footer" class=" w3-center">
-	<!-- Footer start -->
-             <center>
-		     <br>
-		     <p class="fieldExplanation">Made by Jack Sheridan | 2019</p>
-            </center>
-	<!-- Footer end -->
-	</div>  
-            
-        </div>
-        </div>
-</body>
-</html>

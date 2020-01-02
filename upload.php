@@ -1,24 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Upload</title>
-    <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" /> 
-        <link rel="stylesheet" href="/main.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
-<body>
-    <div id="container">
-    <ul>
-  <li><a href="/">Home</a></li>
-  <li><a href="/search.php">Search</a></li>
-  <li><a class="active" href="/create.php">Create</a></li>
-</ul>    
-    
-    
-    
 <?php
+session_start();
+if (!$_SESSION["verified"]) {
+	header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+}
 
 ini_set('display_errors', TRUE);
 
@@ -35,18 +19,8 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-
-
-
-
-
-
-// define variables and set to empty values
 $tags = "";
-$tagErr = "";
 $folderID = 0;
-$locErr = "";
-$fileErr = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$target_dir = "images/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -58,65 +32,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	echo $tags;
 	echo $folderID;
 
-
 	$uploadOk = 1;
 
 	// Check if file already exists
 	if (file_exists($target_file)) {
-	    $fileErr = "File Exists. Please try again.";
+	    echo "File Exists. Please try again.\n";
 	    $uploadOk = 0;
 	}
 
 
 	// Check file size
 	if ($_FILES["fileToUpload"]["size"] > 5000000000) {
-	    $fileErr = "Sorry, your file is too large.";
+	    echo "Sorry, your file is too large.\n";
 	    $uploadOk = 0;
 	}
 
 	// Allow certain file formats
 	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 	&& $imageFileType != "gif" ) {
-	    $fileErr = "Sorry, only images are allowed. You uploaded a ".".".$imageFileType . " file.";
+	    echo "Sorry, only images are allowed. You uploaded a ".".".$imageFileType . " file.\n";
 	    $uploadOk = 0;
 	}
 
 	// Ensure there is a file
 	if($imageFileType == "") {
-	    $fileErr = "No image.";
+	    echo "No image.\n";
 	    $uploadOk = 0;
 	}
 
+				<input type="text" placeholder="Tags" pattern="^[a-z0-9]+(,[a-z0-9]+){4,31}$" title="Lower case letters and numbers only. Separated by comma." name="tags" minlength="9" required>
 
 	// Check tags formatting
-	if (!preg_match("/^[a-z]+(,[a-z]+)+$/", $tags)) {
-	    $tagErr = "Incorrect formatting";
+	if (!preg_match("/[a-z0-9]+(,[a-z0-9]+){4,31}$/", $tags)) {
+	    echo "Incorrect tag formatting\n";
 	    $uploadOk = 0;
-	} else {
-
-	    $explodedTags = explode(",", $tags);
-	    // Check tags count
-	    if (count($explodedTags) < 5) {
-	        $tagErr = "Not enough tags";
-	        $uploadOk = 0;
-	    
-	    // Check tags count
-	    } elseif (count($explodedTags) > 32) {
-	        $tagErr = "Too many tags";
-	        $uploadOk = 0;
-
-	    // Check duplicate tags
-	    } elseif (count(array_unique($explodedTags)) < count($explodedTags)) {
-			$tagErr = "Duplicate tags.";
-	    }
 	}
-
-
 
 	if ($uploadOk == 1) {
 		$res = mysqli_query($conn, "SELECT * FROM folders WHERE id = '" . $folderID . "'");
 		if ((mysqli_num_rows($res) == 0)) {
-	    		$locErr = "Location does not exist.";
+	    		echo "Location does not exist.\n";
 	    		$uploadOk = 0;
 		}
 	}
@@ -139,10 +94,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			header("Location:/index.php?location=".$folderID);
 			exit();
 		} else {
-			$fileErr = "Sorry, there was an error uploading your file.";
+			echo "Sorry, there was an error uploading your file.\n";
 		}
 		} else {
-			    echo "Error: " . mysqli_stmt_error ( $stmt ) . "<br>";
+			echo "Error: " . mysqli_stmt_error ( $stmt );
 		}
 	}
 } 
@@ -153,19 +108,6 @@ function clean_input($data) {
 	$data = htmlspecialchars($data);
 	return $data;
 }
-
-function getRand() { 
-    $characters = 'abcdefghijklmnopqrstuvwxyz'; 
-    $randomString = ''; 
-    for ($i = 0; $i < 10; $i++) { 
-	$index = rand(0, strlen($characters) - 1); 
-	$randomString .= $characters[$index]; 
-    } 
-    return $randomString; 
-} 
-
-
-
 
 function make_thumb($src, $dest, $desired_width, $type) {
 
@@ -232,50 +174,3 @@ switch ($type)
 
 
 ?>
-    	<div id="body">
-	<!-- Body start -->
-    
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">  
-    <div class="uploadDiv">
-    <div class="numberCircle">1</div>
-    <label class="myLabel">
-    <input type="file" name="fileToUpload" />
-    <span class="uploadBtn">Choose Photo</span></label>
-        <div class="chooseImage-container">
-            <p class="error"><?php echo $fileErr;?></p>
-        </div>
-    <div class="numberCircle">2</div>
-    <h2 class="stepHeader">Add Tags:</h2>
-                <br>
-   <div class="tagTextArea-container">
-    <textarea class="tagTextArea" name="tags"><?php echo $tags;?></textarea>
-    <p class="fieldExplanation">Separated by comma. Only lowercase letters. Min: 5, Max: 32</p>
-            <p class="error"><?php echo $tagErr;?></p>
-</div>
-            <div class="numberCircle">3</div>
-            <h2 class="stepHeader">Choose Location:</h2>
-                <br>
-        <div class="locationText-container">
-          <input class="locationText" type="text" name="location" value= "<?php echo $folderID; ?>" />
-            <p class="fieldExplanation">Must start with 'home'</p>
-            <p class="error"><?php echo $locErr;?></p>
-        </div>
-                    <div class="numberCircle">4</div>
-        <input class="submitUploadBtn" type="submit" name="submit" value="Submit">  
-    </div> 
-               
-    </div>
-</form>
-	
-	<div id="footer" class=" w3-center">
-	<!-- Footer start -->
-             <center>
-		     <br>
-		     <p class="fieldExplanation">Made by Jack Sheridan | 2019</p>
-            </center>
-	<!-- Footer end -->
-	</div>  
-            
-        </div>
-</body>
-</html>

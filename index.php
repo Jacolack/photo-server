@@ -1,31 +1,29 @@
 <?php
 session_start();
-if ($_SESSION["verified"]) {
+if (!$_SESSION["verified"]) {
+	header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Photos</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="/main.css">
+	<link rel="stylesheet" href="/assets/main.css">
 </head>
 <body>
-	<div id="container">
+<div id="container">
 		<!-- Body start -->
 		<div id="body">
 			<ul class="nav">
 				<li class="navli"><a class="active" href="/">Home</a></li>
 				<li class="navli"><a href="/search.php">Search</a></li>
-				<li class="rightNavBtn"><button id="folderBtn"><img src = "/newFolder.png"></button></li>
-				<li class="rightNavBtn"><button id="uploadBtn"><img src = "/upload.png"></button></li>
+				<li class="rightNavBtn"><button id="folderBtn"><img src = "/assets/newFolder.png"></button></li>
+				<li class="rightNavBtn"><button id="uploadBtn"><img src = "/assets/upload.png"></button></li>
 			</ul>
+			<div class='grid'>
 <?php
-} else {
-	  header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
-}
-// define variables and set to empty values
 $servername = "localhost";
 $username = "root";
 $password = "cute";
@@ -53,37 +51,31 @@ if ($GETLocation != "") {
 }
 
 $res = mysqli_query($conn, "SELECT * FROM folders WHERE parent = '". $folderID . "'");
-echo "<div class='grid'>"; 
 while($row = mysqli_fetch_assoc($res)) {
 	$link = "/index.php?location=" . $row['id'];
-	echo "<div draggable='true' class='gridBoxFolder' id='folder" . $row['id'] . "' data-id='" . $row['id'] . "'>";
-	echo "<a class='gridBoxLink' href=" . $link . ">";
-	echo "<div class='folderOuter'>";
-	echo "<div class='cls-context-menu-folder' data-id='" . $row['id'] . "' data-largest='y'>";
-	echo "<img draggable='false' class='cls-context-menu-folder' data-id='" . $row['id'] . "' src='folder.svg'>";
-	echo "<p class='cls-context-menu-folder' data-id='" . $row['id'] . "'>" . $row['name']. "</p>";
-	echo "</div>";
-	echo "</div>";
-	echo "</a>";
-	echo "</div>";
+	echo "			<div draggable='true' class='gridBoxFolder' id='folder" . $row['id'] . "' data-id='" . $row['id'] . "'>";
+	echo "				<a class='gridBoxLink' href=" . $link . ">";
+	echo "					<div class='folderOuter'>";
+	echo "						<div class='cls-context-menu-folder' data-id='" . $row['id'] . "' data-largest='y'>";
+	echo "							<img draggable='false' class='cls-context-menu-folder' data-id='" . $row['id'] . "' src='/assets/folder.svg'>";
+	echo "							<p class='cls-context-menu-folder' data-id='" . $row['id'] . "'>" . $row['name']. "</p>";
+	echo "						</div>";
+	echo "					</div>";
+	echo "				</a>";
+	echo "			</div>";
 }
 
 $res = mysqli_query($conn, "SELECT * FROM photos WHERE parent = '". $folderID . "'");
 while($row = mysqli_fetch_assoc($res)) {
 	$thisId = $row['id'];
 	$viewLink = "/images/" . $thisId . "." . $row['fileType'];
-	echo "<div draggable='true' class='gridBoxImage' data-id='" . $row['id'] . "'>";
-	echo "<a href=" . $viewLink . ">";
-	echo "<div style='
-	background: url(images/thumb" . $row['id']. "." . $row['fileType'] . ") 50% 50% no-repeat; 
-	background-size: cover;
-	image-orientation: from-image;
-	height: 100%;
-	width: 100%;
-	' class='cls-context-menu-image' id='$thisId'>";
-	echo "</div>";
-	echo "</a>";
-	echo "</div>";
+	echo "			<div draggable='true' class='gridBoxImage' data-id='" . $row['id'] . "'>";
+	echo "				<a href=" . $viewLink . ">";
+	echo "					<div style='background: url(images/thumb" . $row['id']. "." . $row['fileType'] . ") 50% 50% no-repeat;'
+				class='cls-context-menu-image' id='$thisId'>";
+	echo "					</div>";
+	echo "				</a>";
+	echo "			</div>";
 }
 
 function clean_input($data) {
@@ -93,18 +85,22 @@ function clean_input($data) {
 	return $data;
 }
 ?>
-<!-- Grid end -->
-</div>
-<!-- Body end -->
+		<!-- Grid end -->
+		</div>
+	<!-- Body end -->
+	</div>
+
+	<!-- Footer start -->
+	<div id="footer">
+		<br>
+		<p class="fieldExplanation"><?php echo (100 - intval(file_get_contents("percent.txt"))); ?>% storage remaining</p>
+	<!-- Footer end -->
+	</div>  
+<!-- Container end -->
 </div>
 
-<!-- Footer start -->
-<div id="footer">
-	<br>
-	<p class="fieldExplanation"><?php echo (100 - intval(file_get_contents("percent.txt"))); ?>% storage remaining</p>
-<!-- Footer end -->
-</div>  
-</div>
+
+<!-- LEFT CLICK MENUS-->
 <div id="div-context-menu" class="cls-context-menu">
 	<ul>
 		<li><a href="theLink">View Info</a></li>
@@ -117,7 +113,7 @@ function clean_input($data) {
 	</ul>
 </div>
 
-<!-- The Modal -->
+<!-- New Folder Modal -->
 <div id="newFolderModal" class="modal">
 	<!-- Modal content -->
 	<div class="modal-content">
@@ -138,7 +134,7 @@ function clean_input($data) {
 </div>
 
 
-<!-- The Modal -->
+<!-- New Image Modal -->
 <div id="newImageModal" class="modal">
 	<!-- Modal content -->
 	<div class="modal-content">
