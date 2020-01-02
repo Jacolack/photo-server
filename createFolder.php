@@ -24,7 +24,7 @@ $locErr = "";
 $nameErr = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-	$location = clean_input($_POST["location"]);
+	$folderID = clean_input($_POST["parent"]);
 	$folderName = clean_input($_POST["folderName"]);
 	$explodedLocation = explode("/", $location);
 	$successful = 1;
@@ -45,13 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    $successful = 0;
 	}
 
-	$fakeExploded = $explodedLocation;
-	array_shift($fakeExploded);
 
-	$fakeLocation = "home";
 	if ($successful == 1) {
-	foreach ($fakeExploded as $value) {
-		$res = mysqli_query($conn, "SELECT * FROM folders WHERE name = '" . $value . "' AND location = '". $fakeLocation . "'");
+		$res = mysqli_query($conn, "SELECT * FROM folders WHERE id = '" . $folderID . "'");
 		if (mysqli_num_rows($res)==0) {
 	    		$locErr = "Location does not exist.";
 	    		$successful = 0;
@@ -59,12 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		} else {
 			$fakeLocation = $fakeLocation."/".$value;
 		}
-	}}
+	}
 
 	if ($successful == 1) {
-		$sql = "INSERT INTO folders (name, location) VALUES ('" . $folderName . "', '" . $location . "')";
+		$sql = "INSERT INTO folders (name, parent) VALUES ('" . $folderName . "', '" . $location . "')";
 		if (mysqli_query($conn, $sql)) {
-			header("Location:/index.php?location=".$location);
+			header("Location:/index.php?location=".$folderID);
 			exit();
 		} else {
 			    echo "Error: " . $sql . "<br>" . mysqli_error($conn);

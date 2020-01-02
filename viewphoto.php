@@ -56,8 +56,8 @@ $imageLink = "/images/" . $row['id'] . "." . $row['fileType'];
 echo "<a href=" . $imageLink . ">";
 echo "<img src=" . $thumbLink . " height='300' style='height: 50%; display:block; margin:auto;' >";
 echo "</a>";
-echo "<p class='infoLbl'>Tags:" . $row['tags'] . "</p>";
-echo "<p class='infoLbl'>Location:" . $row['location'] . "</p>";
+echo "<p class='infoLbl'>Tags: " . $row['tags'] . "</p>";
+echo "<p class='infoLbl'>Location ID: " . $row['parent'] . "</p>";
 echo "<a class='createPicker' target='blank' href='/editPhoto.php?id=$id'>Edit Tags/Location</a>";
 
 echo "<br>";

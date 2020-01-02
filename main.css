@@ -21,6 +21,11 @@ html, body {
     display: table;
 }
 
+img.cls-context-menu-folder {
+	margin: auto;
+	display: block;
+}
+
 div.cls-context-menu-folder {
 	display: table-cell;
     	max-width: 100%;
@@ -29,7 +34,11 @@ div.cls-context-menu-folder {
 }
 
 p.cls-context-menu-folder {
-    margin: 4px;
+	width:90%;
+	margin: auto;
+	text-align: center;
+	display: block;
+	margin-top: 4px;
 }
 
 .grid::before {
@@ -52,11 +61,12 @@ p.cls-context-menu-folder {
       border: 1px #333 solid;
 }
 
-
 .gridBoxLink {
 	text-decoration:none;
 }
 
+.gridBoxItem {
+}
 
 .searchField {
   padding: 6px;

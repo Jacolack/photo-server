@@ -40,6 +40,7 @@ if (!$conn) {
 }
 
 $location = "home";
+$folderID = 0;
 $folderName = "";
 $locErr = "";
 $nameErr = "";
@@ -48,32 +49,30 @@ $nameErr = "";
 $GETLocation = clean_input($_GET["location"]);
 
 if ($GETLocation != "") {
-	$location = $GETLocation;
+	$folderID = (int)$GETLocation;
 }
 
-$res = mysqli_query($conn, "SELECT * FROM folders WHERE location = '". $location . "'");
+$res = mysqli_query($conn, "SELECT * FROM folders WHERE parent = '". $folderID . "'");
 echo "<div class='grid'>"; 
 while($row = mysqli_fetch_assoc($res)) {
-	$link = "/index.php?location=" . $row['location'] . "/" . $row['name'];
-	echo "<div class='gridBoxItem'>";
+	$link = "/index.php?location=" . $row['id'];
+	echo "<div draggable='true' class='gridBoxFolder' id='folder" . $row['id'] . "' data-id='" . $row['id'] . "'>";
 	echo "<a class='gridBoxLink' href=" . $link . ">";
 	echo "<div class='folderOuter'>";
-	echo "<div class='cls-context-menu-folder'>";
-	echo "<center class='cls-context-menu-folder'>";
-	echo "<img class='cls-context-menu-folder' src='folder.svg'>";
-	echo "<p class='cls-context-menu-folder'>" . $row['name']. "</p>";
-	echo "</center>";
+	echo "<div class='cls-context-menu-folder' data-id='" . $row['id'] . "' data-largest='y'>";
+	echo "<img draggable='false' class='cls-context-menu-folder' data-id='" . $row['id'] . "' src='folder.svg'>";
+	echo "<p class='cls-context-menu-folder' data-id='" . $row['id'] . "'>" . $row['name']. "</p>";
 	echo "</div>";
 	echo "</div>";
 	echo "</a>";
 	echo "</div>";
 }
 
-$res = mysqli_query($conn, "SELECT * FROM photos WHERE location = '". $location . "'");
+$res = mysqli_query($conn, "SELECT * FROM photos WHERE parent = '". $folderID . "'");
 while($row = mysqli_fetch_assoc($res)) {
 	$thisId = $row['id'];
 	$viewLink = "/images/" . $thisId . "." . $row['fileType'];
-	echo "<div>";
+	echo "<div draggable='true' class='gridBoxImage' data-id='" . $row['id'] . "'>";
 	echo "<a href=" . $viewLink . ">";
 	echo "<div style='
 	background: url(images/thumb" . $row['id']. "." . $row['fileType'] . ") 50% 50% no-repeat; 
@@ -129,7 +128,7 @@ function clean_input($data) {
 		<form method="post" action="createFolder.php">  
 			<div class="modal-body">
 				<input type="text" placeholder="Folder Name" pattern="^[a-zA-Z0-9_]*$" title="Letters, numbers, and underscores, max 32 characters." name="folderName" maxlength="32" required>
-				<input type="hidden" name="location" value=<?php echo $location; ?>>
+				<input type="hidden" name="parent" value=<?php echo $folderID; ?>>
 			</div>
 			<div class="modal-footer">
 				<input type="submit" value="Create">
@@ -151,7 +150,7 @@ function clean_input($data) {
 			<div class="modal-body">
 				<input type="file" id="imageUploadInput" name="fileToUpload" required hidden>
 				<input type="text" placeholder="Tags" pattern="^[a-z0-9]+(,[a-z0-9]+){4,31}$" title="Lower case letters and numbers only. Separated by comma." name="tags" minlength="9" required>
-				<input type="hidden" name="location" value=<?php echo $location; ?>>
+				<input type="hidden" name="parent" value=<?php echo $folderID; ?>>
 			</div>
 			<div class="modal-footer">
 				<input type="submit" value="Create">

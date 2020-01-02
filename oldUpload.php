@@ -54,15 +54,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$date = new DateTime("now", new DateTimeZone('America/Los_Angeles') );
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	$tags = clean_input($_POST["tags"]);
-	$folderID = (int) clean_input($_POST["parent"]);
+	$location = clean_input($_POST["location"]);
 	echo $tags;
-	echo $folderID;
+	echo $location;
 
 
 	$uploadOk = 1;
 
 	// Check if file already exists
-	if (file_exists($target_file)) {
+	if (file_exists($real_target_file)) {
 	    $fileErr = "File Exists. Please try again.";
 	    $uploadOk = 0;
 	}
@@ -112,22 +112,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 
+	// Check location formatting
+	if (!preg_match("/^(home)((\/[\w]+)+)?$/", $location)) {
+	    $locErr = "Incorrect formatting";
+	}	
 
+
+
+
+
+	$explodedLocation = explode("/", $location);
+
+
+	$fakeExploded = $explodedLocation;
+	array_shift($fakeExploded);
+
+	$fakeLocation = "home";
 	if ($uploadOk == 1) {
-		$res = mysqli_query($conn, "SELECT * FROM folders WHERE id = '" . $folderID . "'");
-		if ((mysqli_num_rows($res) == 0)) {
+	foreach ($fakeExploded as $value) {
+		$res = mysqli_query($conn, "SELECT * FROM folders WHERE name = '" . $value . "' AND location = '". $fakeLocation . "'");
+		if (mysqli_num_rows($res)==0) {
 	    		$locErr = "Location does not exist.";
-	    		$uploadOk = 0;
+			$uploadOk = 0;
+			break;
+		} else {
+			$fakeLocation = $fakeLocation."/".$value;
 		}
-	}
+	}}
 
 
 	// Check if $uploadOk is still 1
 	if ($uploadOk == 1) {
 
 
-	$stmt = mysqli_prepare($conn, "INSERT INTO photos (tags, parent, fileType, uploaded) VALUES (?, ?, ?, NOW())");
-	mysqli_stmt_bind_param($stmt, 'sis', $tags, $folderID, $imageFileType);
+	$stmt = mysqli_prepare($conn, "INSERT INTO photos (tags, location, fileType, uploaded) VALUES (?, ?, ?, NOW())");
+	mysqli_stmt_bind_param($stmt, 'sss', $tags, $location, $imageFileType);
 
 	if (mysqli_stmt_execute($stmt)) {
 			$theId = mysqli_insert_id ($conn);
@@ -136,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $real_target_file)) {
 			make_thumb("images/". $theId. ".".$imageFileType, "images/thumb".$theId.".". $imageFileType, 200, $imageFileType);
 			
-			header("Location:/index.php?location=".$folderID);
+			header("Location:/index.php?location=".$location);
 			exit();
 		} else {
 			$fileErr = "Sorry, there was an error uploading your file.";
@@ -256,7 +275,7 @@ switch ($type)
             <h2 class="stepHeader">Choose Location:</h2>
                 <br>
         <div class="locationText-container">
-          <input class="locationText" type="text" name="location" value= "<?php echo $folderID; ?>" />
+          <input class="locationText" type="text" name="location" value= "<?php echo $location; ?>" />
             <p class="fieldExplanation">Must start with 'home'</p>
             <p class="error"><?php echo $locErr;?></p>
         </div>

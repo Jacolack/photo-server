@@ -45,6 +45,7 @@ var btn = document.getElementById("folderBtn");
 var span = document.getElementById("closeFolder");
 var uploadSpan = document.getElementById("closeUpload");
 
+
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
   modal.style.display = "block";
@@ -81,4 +82,90 @@ uploadBtn.onclick = function() {
 
 uploadInput.onchange = function() {
   uploadModal.style.display = "block";
+}
+
+/////////////////////////////////
+//   DRAG AND DROP ELEMENTS    //
+/////////////////////////////////
+
+
+var draggables = [];
+var droppableFolders = document.getElementsByClassName("cls-context-menu-folder"); 
+var draggableFolders = document.getElementsByClassName("gridBoxFolder"); 
+var draggableImages = document.getElementsByClassName("gridBoxImage"); 
+var droppedId = 0;
+var droppedType = "";
+
+
+for (var droppableFolderIndex = 0; droppableFolderIndex < droppableFolders.length; droppableFolderIndex++) {
+	droppableFolders[droppableFolderIndex].addEventListener('dragenter', function(event) {
+		setTimeout(function(){
+			document.getElementById("folder" + event.target.getAttribute("data-id")).style.background = "#CCCCCC";
+		}, 1);
+		event.preventDefault();
+
+	}, true);
+
+	droppableFolders[droppableFolderIndex].addEventListener('dragover', function(event) {
+		  event.preventDefault();
+		  return false;
+	}, true);
+
+	droppableFolders[droppableFolderIndex].addEventListener('dragleave', function(event) {
+		if (event.target.getAttribute("data-largest")) {
+			document.getElementById("folder" + event.target.getAttribute("data-id")).style.background = "#555";
+		}
+	}, true);
+
+	droppableFolders[droppableFolderIndex].addEventListener('drop', function(event) {
+		droppedId = parseInt(event.target.getAttribute("data-id"));
+		event.stopPropagation();
+		//event.target.style.background = 'white';
+		dnd_successful = true;
+		event.preventDefault(); //Prevent Firefox from redirecting the page
+	}, true);
+
+}
+
+for (var draggableFolderIndex = 0; draggableFolderIndex < draggableFolders.length; draggableFolderIndex++) {
+	draggables.push(draggableFolders[draggableFolderIndex]);
+}
+
+for (var draggableImageIndex = 0; draggableImageIndex < draggableImages.length; draggableImageIndex++) {
+	draggables.push(draggableImages[draggableImageIndex]);
+}
+
+for (var i = 0; i < draggables.length; i++) {
+	draggables[i].addEventListener('dragstart', function(event) {
+		setTimeout(function(){
+			event.target.style.opacity = "0.5";
+		}, 1);
+
+		/* Allow specific type of transfers */
+		dnd_successful = false;
+	}, false);
+	
+	draggables[i].addEventListener('dragend', function(event) {
+		if (dnd_successful) {
+			// did drop in folder
+			if (event.target.className == "gridBoxFolder") {
+				droppedType = "folder";
+			} else {
+				droppedType = "image";
+			}
+			var didConfirm = confirm("Are you sure you want to move the " + droppedType + " with ID " + parseInt(event.target.getAttribute("data-id")) + " into the folder with ID " + droppedId + "?");
+
+			if (didConfirm == true) {
+				window.location = "/moveItem.php?from=" + event.target.getAttribute("data-id") + "&to=" + droppedId + "&itemType=" + droppedType;
+			} else {
+				document.getElementById("folder" + droppedId).style.background = "#555";
+				event.target.style.opacity = "1.0";
+				droppedID = 0;
+				droppedType = "";
+			}
+
+		} else {
+			event.target.style.opacity = "1.0";
+		}
+	}, false);
 }
