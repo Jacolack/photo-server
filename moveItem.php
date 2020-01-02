@@ -30,23 +30,28 @@ if (!$conn) {
 }
 
 // define variables and set to empty values
-$folderID = 0;
-$locErr = "";
-$fileErr = "";
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	$itemID = (int) clean_input($_GET["from"]);
 	$folderID = (int) clean_input($_GET["to"]);
 	$itemType = clean_input($_GET["type"]);
+	$returnTo = 0;
 
 	$res = mysqli_query($conn, "SELECT * FROM folderss WHERE id = '". $folderID . "'");
-	if (mysqli_num_rows($res)==0) {
+	while($row = mysqli_fetch_assoc($res)) {
+		$returnTo = $row["parent"];
+	}	
 
+	if (mysqli_num_rows($res)==0) {
+		echo "Error: folder does not exist";
 	} else {
 		if ($itemType == "folder") {
-			mysqli_query($conn, "UPDATE photos SET tags = '". $tags . "'  WHERE id = '". $id . "'");
+			mysqli_query($conn, "UPDATE folders SET parent = '". $folderID . "'  WHERE id = '". $itemID . "'");
 		} else {
-			mysqli_query($conn, "UPDATE photos SET tags = '". $tags . "'  WHERE id = '". $id . "'");
+			mysqli_query($conn, "UPDATE photos SET parent = '". $folderID . "'  WHERE id = '". $itemID . "'");
 		}
+		$returnTo = clean_input($_GET["returnTo"]);
+		header("Location:/index.php?location=".$returnTo);
+		exit();
 	}
 } 
 
@@ -71,6 +76,7 @@ function clean_input($data) {
 	<!-- Footer end -->
 	</div>  
             
+        </div>
         </div>
 </body>
 </html>
