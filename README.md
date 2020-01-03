@@ -19,7 +19,7 @@ create table photos(
 );
 
 create table folders(
-    id INT NOT NULL AUTO_INCREMENT,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
     name CHAR(32) NOT NULL,
     parent MEDIUMINT NOT NULL,
     created DATETIME NOT NULL,
