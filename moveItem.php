@@ -8,7 +8,8 @@ ini_set('display_errors', TRUE);
 
 $servername = "localhost";
 $username = "root";
-$password = "cute";
+include 'assets/hidden.php';
+$password = $mySQLPassword;
 $database = "images";
 
 // Create connection

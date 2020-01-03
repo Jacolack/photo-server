@@ -30,7 +30,8 @@ if (!$_SESSION["verified"]) {
 
 $servername = "localhost";
 $username = "root";
-$password = "cute";
+include 'assets/hidden.php';
+$password = $mySQLPassword;
 $database = "images";
 
 // Create connection

@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $servername = "localhost";
 $username = "root";
-$password = "cute";
+include 'assets/hidden.php';
+$password = $mySQLPassword;
 $database = "images";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

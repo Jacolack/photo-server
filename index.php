@@ -26,7 +26,8 @@ if (!$_SESSION["verified"]) {
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "cute";
+include 'assets/hidden.php';
+$password = $mySQLPassword;
 $database = "images";
 
 // Create connection
