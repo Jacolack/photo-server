@@ -1,6 +1,6 @@
 <?php
 session_start();
-$hashedkey = '$2y$10$WQRe0OL8WE5GIku9BKXH7uKZBpm5w8MaN/kY583PkrWFQ6p1r8BhS';
+include 'assets/hidden.php';
 # Create a hash for a password with hashgenerator.php; in this case, I used "test1234"
 if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
   header("Location: /index.php");

@@ -20,15 +20,17 @@ if (isset($_POST["key"])) {
     <title>BCRYPT Hash Generator</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="verification.css">
+    <link rel="stylesheet" href="assets/login.css">
   </head>
   <body>
+	<div>
     <h1>BCRYPT Hash Generator</h1>
     <p>Please enter in a password to be hashed for use in the verification system.</p>
     <form action="hashgenerator.php" method="post" autocomplete="off">
       <input type="password" name="key" id="key" maxlength="32" placeholder="Key">
       <input type="submit" value="Hash">
     </form>
-<?php if (isset($message)) echo "    <p>$message</p>\n"; ?>
+	<?php if (isset($message)) echo "    <p>$message</p>\n"; ?>
+	</div>
   </body>
 </html>
