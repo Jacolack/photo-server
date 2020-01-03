@@ -6,7 +6,7 @@ Installation:
 3. Get [MySQL](https://www.mysql.com/).
 4. Get [PHP](https://www.php.net/).
 
-Now, create two tables in your mysql database:
+5. Now, create two tables in your mysql database:
 
     create table photos(
         id MEDIUMINT NOT NULL AUTO_INCREMENT,
@@ -25,6 +25,9 @@ Now, create two tables in your mysql database:
         PRIMARY KEY ( id )
     );
 
-Now, in your Apache root public folder, clone this repository.
+6. Now, in your Apache root public folder, clone this repository.
+7. Add a directory in your root public folder called images.
+8. Copy assets/EXAMPLE_hidden.php to hidden.php and edit your mysql password and main verification hash.
+
 
 That's it! 
