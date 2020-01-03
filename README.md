@@ -34,7 +34,7 @@ create table folders(
 
 
 That's it! 
-If you like what I made, feel free to say thank you by buying me a coffee!
+If you like what I made, say thank you by buying me a coffee!
 
 [![Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/jacksheridan)
 
