@@ -6,7 +6,8 @@ Installation:
 3. Get [MySQL](https://www.mysql.com/).
 4. Get [PHP](https://www.php.net/).
 
-5. Now, create two tables in your mysql database:
+5. Now, create a mysql database called images.
+5. Then create two tables in your mysql database:
 
 ```sql
 create table photos(
@@ -33,3 +34,6 @@ create table folders(
 
 
 That's it! 
+If you like what I made, feel free to say thank you by buying me a coffee!
+[![Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/jacksheridan)
+
