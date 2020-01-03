@@ -7,7 +7,7 @@ Installation:
 4. Get [PHP](https://www.php.net/).
 
 5. Now, create a mysql database called images.
-5. Then create two tables in your mysql database:
+6. Then create two tables in your mysql database:
 
 ```sql
 create table photos(
@@ -28,9 +28,9 @@ create table folders(
 );
 ```
 
-6. In your Apache root public folder, clone this repository.
-7. Add a directory called images.
-8. Copy assets/EXAMPLE_hidden.php to assets/hidden.php and add your credentials.
+7. In your Apache root public folder, clone this repository.
+8. Add a directory called images.
+9. Copy assets/EXAMPLE_hidden.php to assets/hidden.php and add your credentials.
 
 
 That's it! 
