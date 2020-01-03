@@ -71,7 +71,8 @@ while($row = mysqli_fetch_assoc($res)) {
 	$viewLink = "/images/" . $thisId . "." . $row['fileType'];
 	echo "			<div draggable='true' class='gridBoxImage' data-id='" . $row['id'] . "'>";
 	echo "				<a href=" . $viewLink . ">";
-	echo "					<div style='background: url(images/thumb" . $row['id']. "." . $row['fileType'] . ") 50% 50% no-repeat;'
+	echo "					<div style='background: url(images/thumb" . $row['id']. "." . $row['fileType'] . ") 50% 50% no-repeat;
+				background-size: cover;'
 				class='cls-context-menu-image' id='$thisId'>";
 	echo "					</div>";
 	echo "				</a>";

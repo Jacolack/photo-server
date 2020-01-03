@@ -38,7 +38,7 @@ if (isset($_POST["key"])) {
     <title>Verify to Continue</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="/assets/login.css">
   </head>
   <body>
 	<div>
