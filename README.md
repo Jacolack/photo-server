@@ -29,7 +29,7 @@ create table folders(
 
 6. Now, in your Apache root public folder, clone this repository.
 7. Add a directory in your root public folder called images.
-8. Copy assets/EXAMPLE_hidden.php to assets/hidden.php and edit your mysql password and main verification hash.
+8. Copy assets/EXAMPLE_hidden.php to assets/hidden.php and edit your mysql password and verification hash.
 
 
 That's it! 
