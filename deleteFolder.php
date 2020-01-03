@@ -21,28 +21,28 @@ if (!$conn) {
 
 // define variables and set to empty values
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-	$itemID = (int) clean_input($_GET["from"]);
-	$folderID = (int) clean_input($_GET["to"]);
-	$itemType = clean_input($_GET["type"]);
+	$folderID = (int) clean_input($_GET["id"]);
 	$returnTo = 0;
 
-	$res = mysqli_query($conn, "SELECT * FROM folders WHERE id = '". $folderID . "'");
-
-	if (mysqli_num_rows($res)==0) {
+	$res = mysqli_query($conn, "SELECT * FROM folders WHERE parent = '". $folderID . "'");
+	$resThis = mysqli_query($conn, "SELECT * FROM folders WHERE id = '". $folderID . "'");
+	$photosRes = mysqli_query($conn, "SELECT * FROM photos WHERE parent = '". $folderID . "'");
+	
+	if (mysqli_num_rows($resThis)==0) {
 		echo "Error: folder does not exist";
-	} else {
-		if ($itemType == "folder") {
-			mysqli_query($conn, "UPDATE folders SET parent = '". $folderID . "'  WHERE id = '". $itemID . "'");
-		} else {
-			mysqli_query($conn, "UPDATE photos SET parent = '". $folderID . "'  WHERE id = '". $itemID . "'");
-		}
-		while($row = mysqli_fetch_assoc($res)) {
+	} else {	
+		while($row = mysqli_fetch_assoc($resThis)) {
 			$returnTo = $row["parent"];
 		}	
-		header("Location:/index.php?location=".$returnTo);
-		exit();
+		if (mysqli_num_rows($res)!=0 || mysqli_num_rows($photosRes)!=0) {
+			echo "Error: folder is not empty";
+		} else {
+			$deleteQ = mysqli_query($conn, "DELETE FROM folders WHERE id = '". $folderID . "'");
+			header("Location:/index.php?location=".$returnTo);
+			exit();
+		}
 	}
-} 
+}
 
 function clean_input($data) {
 	$data = trim($data);
