@@ -3,7 +3,7 @@
 
 session_start();
 if (!$_SESSION["verified"]) {
-	header("Location: /login.php?continue=" . $_SERVER["SCRIPT_NAME"]);
+	header("Location: /login.php");
 }
 
 $servername = "localhost";
@@ -35,9 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if (mysqli_num_rows($res)==0) {
 	    		echo "Location does not exist.\n";
 	    		$successful = 0;
-			break;
-		} else {
-			$fakeLocation = $fakeLocation."/".$value;
 		}
 	}
 
@@ -47,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			header("Location:/index.php?location=".$folderID);
 			exit();
 		} else {
-			    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 		}
 	}
 } 
