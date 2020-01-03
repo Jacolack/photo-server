@@ -1,4 +1,4 @@
-#L.A.M.P. Photo Server
+# L.A.M.P. Photo Server
 
 Installation:
 1. Get Linux. I used [Raspbian](https://www.raspbian.org/).
