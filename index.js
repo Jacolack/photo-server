@@ -25,7 +25,7 @@ document.oncontextmenu = function(e){
 		rgtClickContextMenu.style.display = 'block'
 		rgtClickContextMenu.innerHTML = rgtClickContextMenu.innerHTML.replace("theLink",infoLink)
 	} else if ( elmnt.className === "cls-context-menu-folder") {
-		var deleteFolderLink = "/deleteFolder.php?id=" + elmnt.id;
+		var deleteFolderLink = "/deleteFolder.php?id=" + elmnt.getAttribute("data-id");
 		e.preventDefault();
 		rgtClickContextMenuFolder.style.left = e.pageX + 'px'
 		rgtClickContextMenuFolder.style.top = e.pageY + 'px'
@@ -156,7 +156,7 @@ for (var i = 0; i < draggables.length; i++) {
 			var didConfirm = confirm("Are you sure you want to move the " + droppedType + " with ID " + parseInt(event.target.getAttribute("data-id")) + " into the folder with ID " + droppedId + "?");
 
 			if (didConfirm == true) {
-				window.location = "/moveItem.php?from=" + event.target.getAttribute("data-id") + "&to=" + droppedId + "&itemType=" + droppedType;
+				window.location = "/moveItem.php?from=" + event.target.getAttribute("data-id") + "&to=" + droppedId + "&type=" + droppedType;
 			} else {
 				document.getElementById("folder" + droppedId).style.background = "#555";
 				event.target.style.opacity = "1.0";
