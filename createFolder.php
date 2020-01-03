@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	if ($successful == 1) {
-		$sql = "INSERT INTO folders (name, parent) VALUES ('" . $folderName . "', '" . $location . "')";
+		$sql = "INSERT INTO folders (name, parent) VALUES ('" . $folderName . "', '" . $folderID . "')";
 		if (mysqli_query($conn, $sql)) {
 			header("Location:/index.php?location=".$folderID);
 			exit();
