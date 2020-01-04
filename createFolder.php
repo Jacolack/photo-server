@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    $successful = 0;
 	}
 
-	if ($successful == 1) {
+	if ($successful == 1 && $folderID!=0) {
 		$res = mysqli_query($conn, "SELECT * FROM folders WHERE id = '" . $folderID . "'");
 		if (mysqli_num_rows($res)==0) {
 	    		echo "Location does not exist.\n";

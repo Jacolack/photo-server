@@ -61,8 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    $uploadOk = 0;
 	}
 
-				<input type="text" placeholder="Tags" pattern="^[a-z0-9]+(,[a-z0-9]+){4,31}$" title="Lower case letters and numbers only. Separated by comma." name="tags" minlength="9" required>
-
 	// Check tags formatting
 	if (!preg_match("/[a-z0-9]+(,[a-z0-9]+){4,31}$/", $tags)) {
 	    echo "Incorrect tag formatting\n";
