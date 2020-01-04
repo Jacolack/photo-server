@@ -6,25 +6,35 @@ Installation:
 3. Get [MySQL](https://www.mysql.com/).
 4. Get [PHP](https://www.php.net/).
 
-Now, create two tables in your mysql database:
+5. Now, create a mysql database called images.
+6. Then create two tables in your mysql database:
 
-    create table photos(
-        id MEDIUMINT NOT NULL AUTO_INCREMENT,
-        tags VARCHAR(1100) NOT NULL,
-        parent MEDIUMINT NOT NULL,
-        fileType CHAR(32) NOT NULL,
-        uploaded DATETIME NOT NULL,
-        PRIMARY KEY ( id )
-    );
+```sql
+create table photos(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    tags VARCHAR(1100) NOT NULL,
+    parent MEDIUMINT NOT NULL,
+    fileType CHAR(32) NOT NULL,
+    uploaded DATETIME NOT NULL,
+    PRIMARY KEY ( id )
+);
 
-    create table folders(
-        id INT NOT NULL AUTO_INCREMENT,
-        name CHAR(32) NOT NULL,
-        parent MEDIUMINT NOT NULL,
-        created DATETIME NOT NULL,
-        PRIMARY KEY ( id )
-    );
+create table folders(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name CHAR(32) NOT NULL,
+    parent MEDIUMINT NOT NULL,
+    created DATETIME NOT NULL,
+    PRIMARY KEY ( id )
+);
+```
 
-Now, in your Apache root public folder, clone this repository.
+7. In your Apache root public folder, clone this repository.
+8. Add a directory called images.
+9. Copy assets/EXAMPLE_hidden.php to assets/hidden.php and add your credentials.
+
 
 That's it! 
+If you like what I made, say thank you by buying me a coffee!
+
+[![Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/jacksheridan)
+
