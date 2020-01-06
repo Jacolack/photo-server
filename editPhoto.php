@@ -68,7 +68,7 @@ echo "<img src=" . $thumbLink . " height='300' style='height: 50%; display:block
 echo "</a>";
 
 $tags = $row['tags'];
-$location = $row['location'];
+$parentId = $row['parent'];
 
 
 if (isset($_POST['deleteImage'])) {
@@ -81,7 +81,7 @@ if (isset($_POST['deleteImage'])) {
 } else if ($_POST["tags"] != "") {
 
 	$tags = clean_input($_POST["tags"]);
-	$location = clean_input($_POST["location"]);
+	$parentId = clean_input($_POST["parent"]);
 
 	$uploadOk = 1;
 
@@ -115,16 +115,8 @@ if (isset($_POST['deleteImage'])) {
 	}	
 
 
-	$explodedLocation = explode("/", $location);
-
-
-	$fakeExploded = $explodedLocation;
-	array_shift($fakeExploded);
-
-	$fakeLocation = "home";
-	if ($uploadOk == 1) {
-	foreach ($fakeExploded as $value) {
-		$res = mysqli_query($conn, "SELECT * FROM folders WHERE name = '" . $value . "' AND location = '". $fakeLocation . "'");
+	if ($uploadOk == 1 && $parentId != 0) {
+		$res = mysqli_query($conn, "SELECT * FROM folders WHERE id = '" . $parentId . "'");
 		if (mysqli_num_rows($res)==0) {
 	    		$locErr = "Location does not exist.";
 			$uploadOk = 0;
@@ -132,21 +124,15 @@ if (isset($_POST['deleteImage'])) {
 		} else {
 			$fakeLocation = $fakeLocation."/".$value;
 		}
-	}}
-	if ($uploadOk == 1) {
-
-
-	mysqli_query($conn, "UPDATE photos SET tags = '". $tags . "'  WHERE id = '". $id . "'");
-	mysqli_query($conn, "UPDATE photos SET location = '". $location . "'  WHERE id = '". $id . "'");
-	echo "OKKKK";
-			header("Location:/index.php?location=".$location);
-			exit();
-		
 	}
 
-
-
-}
+	if ($uploadOk == 1) {
+		mysqli_query($conn, "UPDATE photos SET tags = '". $tags . "'  WHERE id = '". $id . "'");
+		mysqli_query($conn, "UPDATE photos SET parent = '". $parentId . "'  WHERE id = '". $id . "'");
+		header("Location:/index.php?location=".$location);
+		exit();
+	}
+	}
 }
 
 function deleteImage($location) {
@@ -189,7 +175,7 @@ function clean_input($data) {
             <h2 class="stepHeader">Choose Location:</h2>
                 <br>
         <div class="locationText-container">
-          <input class="locationText" type="text" name="location" value= "<?php echo $location; ?>" />
+          <input class="locationText" type="text" name="parent" value= "<?php echo $parentId; ?>" />
             <p class="fieldExplanation">Must start with 'home'</p>
             <p class="error"><?php echo $locErr;?></p>
         </div>

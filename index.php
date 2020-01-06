@@ -106,11 +106,14 @@ function clean_input($data) {
 <div id="div-context-menu" class="cls-context-menu">
 	<ul>
 		<li><a href="theLink">View Info</a></li>
+		<li><a href="editTagsLink">Edit Tags</a></li>
+		<li><a href="deletePhotoLink">Delete Photo</a></li>
 	</ul>
 </div>
 
 <div id="div-context-menu-folder" class="cls-context-menu">
 	<ul>
+		<li><a href="editFolderNameLink">Rename</a></li>
 		<li><a href="theLink">Delete Folder</a></li>
 	</ul>
 </div>

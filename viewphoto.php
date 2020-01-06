@@ -12,7 +12,7 @@ if (!$_SESSION["verified"]) {
     <title>Photos</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="assets/main.css">
 </head>
 
 <body>
@@ -146,13 +146,9 @@ function clean_input($data) {
         <!-- Body end -->
         </div>
 
-
 	<div id="footer">
-	<!-- Footer start -->
-             <center>
-		     <br>
-		     <p class="fieldExplanation">Made by Jack Sheridan | 2019</p>
-            </center>
+		<br>
+		<p class="fieldExplanation"><?php echo (100 - intval(file_get_contents("percent.txt"))); ?>% storage remaining</p>
 	<!-- Footer end -->
 	</div>  
 

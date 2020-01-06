@@ -69,7 +69,7 @@ $imageLink = "/images/" . $row['id'] . "." . $row['fileType'];
 $viewLink = "/viewphoto.php?id=" . $row['id'];
 
 echo "<div>";
-echo "<a href=" . $viewLink . ">";
+echo "<a href=" . $imageLink . ">";
 echo "<div style='
 background: url(images/thumb" . $row['id']. "." . $row['fileType'] . ") 50% 50% no-repeat; 
 background-size: cover;
