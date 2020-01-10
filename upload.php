@@ -87,9 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$theId = mysqli_insert_id ($conn);
 			$real_target_file = $target_dir . $theId . "." . $imageFileType;
 
+		
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $real_target_file)) {
-			make_thumb("images/". $theId. ".".$imageFileType, "images/thumb".$theId.".". $imageFileType, 200, $imageFileType);
-			
+			$imageName = $theId. ".".$imageFileType;
+			make_thumb("images/".$imageName , "images/thumb".$theId.".". $imageFileType, 200, $imageFileType);
 			header("Location:/index.php?location=".$folderID);
 			exit();
 		} else {
